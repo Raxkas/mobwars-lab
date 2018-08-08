@@ -1,0 +1,224 @@
+{
+    "mobs": [
+        {
+            "cooldown": 5,
+            "hp": 4,
+            "income": 1,
+            "money_cost": 5,
+            "name": "\u0421\u043b\u0430\u0431\u0430\u043a",
+            "power_cost": 1,
+            "stack_size": 5,
+            "unlock_time": 9.0
+        },
+        {
+            "cooldown": 6,
+            "hp": 4,
+            "income": 2,
+            "money_cost": 11,
+            "name": "\u041c\u043e\u0440\u043f\u0435\u0445",
+            "power_cost": 1,
+            "stack_size": 5,
+            "unlock_time": 18.0
+        },
+        {
+            "cooldown": 7,
+            "hp": 10,
+            "income": 4,
+            "money_cost": 22,
+            "name": "\u0412\u0414\u0412\u0448\u043d\u0438\u043a",
+            "power_cost": 1,
+            "stack_size": 5,
+            "unlock_time": 42.375
+        },
+        {
+            "cooldown": 8,
+            "hp": 10,
+            "income": 6,
+            "money_cost": 35,
+            "name": "\u0421\u043f\u0435\u0440\u0435\u0442\u043e\u043d",
+            "power_cost": 1,
+            "stack_size": 6,
+            "unlock_time": 64.0
+        },
+        {
+            "cooldown": 14,
+            "hp": 15,
+            "income": 10,
+            "money_cost": 57,
+            "name": "\u0422\u043e\u043b\u0438\u043a",
+            "power_cost": 1,
+            "stack_size": 3,
+            "unlock_time": 76.375
+        },
+        {
+            "cooldown": 14,
+            "hp": 11,
+            "income": 13,
+            "money_cost": 80,
+            "name": "\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u0440\u0435\u043b",
+            "power_cost": 1,
+            "stack_size": 5,
+            "unlock_time": 91.5
+        },
+        {
+            "cooldown": 16,
+            "hp": 27,
+            "income": 18,
+            "money_cost": 106,
+            "name": "\u041f\u0430\u0443\u043b\u0434\u0440\u043e\u043d",
+            "power_cost": 1,
+            "stack_size": 6,
+            "unlock_time": 112.5
+        },
+        {
+            "cooldown": 18,
+            "hp": 40,
+            "income": 25,
+            "money_cost": 138,
+            "name": "\u0422\u0430\u043d\u0433\u043e",
+            "power_cost": 1,
+            "stack_size": 5,
+            "unlock_time": 131.0
+        },
+        {
+            "cooldown": 20,
+            "hp": 30,
+            "income": 29,
+            "money_cost": 173,
+            "name": "\u041c\u043e\u0449\u0438\u0449\u0435",
+            "power_cost": 1,
+            "stack_size": 5,
+            "unlock_time": 162.0
+        },
+        {
+            "cooldown": 23,
+            "hp": 60,
+            "income": 36,
+            "money_cost": 226,
+            "name": "\u041a\u0438\u043a\u043a\u0438\u043a",
+            "power_cost": 2,
+            "stack_size": 4,
+            "unlock_time": 192.5
+        },
+        {
+            "cooldown": 28,
+            "hp": 26,
+            "income": 45,
+            "money_cost": 280,
+            "name": "\u0410\u0434\u043e\u0432\u0435\u0446",
+            "power_cost": 1,
+            "stack_size": 3,
+            "unlock_time": 223.5
+        },
+        {
+            "cooldown": 30,
+            "hp": 40,
+            "income": 56,
+            "money_cost": 500,
+            "name": "\u0425\u0440\u043e\u043d\u0437\u0443\u0441",
+            "power_cost": 1,
+            "stack_size": 3,
+            "unlock_time": 254.0
+        },
+        {
+            "cooldown": 30,
+            "hp": 60,
+            "income": 74,
+            "money_cost": 650,
+            "name": "\u0421\u043c\u043e\u043a",
+            "power_cost": 1,
+            "stack_size": 3,
+            "unlock_time": 281.0
+        },
+        {
+            "cooldown": 30,
+            "hp": 100,
+            "income": 120,
+            "money_cost": 1025,
+            "name": "\u041e\u043a\u0442\u0430\u0432\u0438\u0443\u0441",
+            "power_cost": 1,
+            "stack_size": 3,
+            "unlock_time": 324.0
+        },
+        {
+            "cooldown": 45,
+            "hp": 35,
+            "income": 180,
+            "money_cost": 1590,
+            "name": "\u0428\u0432\u044b\u0440\u044f\u0442\u0435\u043b\u044c",
+            "power_cost": 2,
+            "stack_size": 2,
+            "unlock_time": 324.0
+        },
+        {
+            "cooldown": 30,
+            "hp": 50,
+            "income": 260,
+            "money_cost": 2300,
+            "name": "\u0420\u0435\u0433\u0435\u043d\u0435\u0440\u0430\u0442\u043e\u0440",
+            "power_cost": 2,
+            "stack_size": 3,
+            "unlock_time": 363.0
+        },
+        {
+            "cooldown": 30,
+            "hp": 55,
+            "income": 387,
+            "money_cost": 3347,
+            "name": "\u0428\u0442\u0443\u0447\u043a\u0430",
+            "power_cost": 2,
+            "stack_size": 3,
+            "unlock_time": 403.0
+        },
+        {
+            "cooldown": 30,
+            "hp": 60,
+            "income": 540,
+            "money_cost": 4795,
+            "name": "\u0421\u043b\u0435\u043f\u043e\u043c\u043e\u0440",
+            "power_cost": 3,
+            "stack_size": 2,
+            "unlock_time": 443.0
+        },
+        {
+            "cooldown": 40,
+            "hp": 60,
+            "income": 719,
+            "money_cost": 6333,
+            "name": "\u0422\u0443\u041f\u0430\u043d\u0447\u041c\u0435\u043d",
+            "power_cost": 4,
+            "stack_size": 1,
+            "unlock_time": 501.0
+        },
+        {
+            "cooldown": 40,
+            "hp": 40,
+            "income": 929,
+            "money_cost": 9010,
+            "name": "\u0411\u043e\u043c\u0431\u0430\u0441\u0442\u0435\u0440",
+            "power_cost": 6,
+            "stack_size": 1,
+            "unlock_time": 544.0
+        },
+        {
+            "cooldown": 40,
+            "hp": 80,
+            "income": 1245,
+            "money_cost": 13075,
+            "name": "\u0421\u043c\u0435\u0440\u0442\u044c",
+            "power_cost": 2,
+            "stack_size": 2,
+            "unlock_time": 584.0
+        },
+        {
+            "cooldown": 40,
+            "hp": 110,
+            "income": 1476,
+            "money_cost": 16112,
+            "name": "\u041f\u0443\u0448\u0435\u0440",
+            "power_cost": 2,
+            "stack_size": 2,
+            "unlock_time": 584.0
+        }
+    ]
+}
