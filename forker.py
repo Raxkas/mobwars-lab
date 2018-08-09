@@ -1,11 +1,22 @@
 from functools import lru_cache
 
 
+# TODO: rename to "Variant"?
 class Branch:
     def __init__(self, player):
+        # TODO: collections.counter
         mob_basket = {kind: 0 for kind in player.mob_kinds}
         self.mob_basket = mob_basket
         self.player = player.copy()
+
+    def next_wave(self):
+        new_income = 0
+        for mob_kind, count in self.mob_basket.items():
+            new_income += count * mob_kind.income
+        self.mob_basket = Branch(self.player).mob_basket
+        self.player.money += int(0.8 * new_income)  # bad simulation of mob-killing money
+        self.player.next_wave()
+        self.player.skip_time_to_wave_end()
 
     def copy(self):
         mob_basket, player = self.mob_basket.copy(), self.player.copy()
