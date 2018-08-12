@@ -1,4 +1,3 @@
-from mobwars.player import Player
 from forker import compute_available_branches, Branch
 
 
@@ -12,11 +11,8 @@ def compute_next_branch(branch):
 
 
 def get_max_income_tactic():
-    player = Player()
-    player.skip_time_to_wave_end()
-    best_branch = Branch(player)
+    best_branch = Branch()
     while True:
         best_branch = compute_next_branch(best_branch)
-        yield best_branch
-        best_branch = best_branch.copy()
+        yield best_branch.copy()
         best_branch.next_wave()

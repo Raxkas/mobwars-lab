@@ -1,13 +1,18 @@
-from functools import lru_cache
+from functools import lru_cache, partial
+
+from mobwars.player import Player
 
 
-# TODO: rename to "Variant"?
 class Branch:
-    def __init__(self, player):
+    def __init__(self, player=None):
+        if player is None:
+            self.player = Player()
+            self.player.skip_time_to_wave_end()
+        else:
+            self.player = player.copy()
         # TODO: collections.counter
-        mob_basket = {kind: 0 for kind in player.mob_kinds}
+        mob_basket = {kind: 0 for kind in self.player.mob_kinds}
         self.mob_basket = mob_basket
-        self.player = player.copy()
 
     def next_wave(self):
         new_income = 0
@@ -29,25 +34,25 @@ class Branch:
         self.mob_basket[mob] += 1
 
 
+# TODO: iteration method requires optimization and it cannot work for big mob-shops
+
 def get_forks_consider_new_mob(branch, mob):
     while branch.player.is_mob_available(mob):
-        branch = branch.copy()
         branch.buy(mob)
-        yield branch
+        yield branch.copy()
 
 
 def extend_branches_consider_new_mob(branches, mob):
+    extend_branches = branches.extend
     for branch in tuple(branches):
-        fork_extensions = get_forks_consider_new_mob(branch, mob)
-        branches.extend(fork_extensions)
+        forks = get_forks_consider_new_mob(branch, mob)
+        extend_branches(forks)
 
 
-# TODO: maybe recovery from player?
-# TODO: maybe history in player?
-# TODO: time system?
 def compute_available_branches(player):
     branch = Branch(player)
-    branches = [branch]
+    result = [branch]
+    extend_result_consider_new_mob = partial(extend_branches_consider_new_mob, branches=result)
     for mob in player.mob_kinds:
-        extend_branches_consider_new_mob(branches, mob)
-    return branches
+        extend_result_consider_new_mob(mob=mob)
+    return result
