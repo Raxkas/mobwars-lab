@@ -10,7 +10,7 @@ class Branch:
             self.player.skip_time_to_wave_end()
         else:
             self.player = player.copy()
-        # TODO: collections.counter
+        # TODO: collections.counter or mobwars.mob_counter
         mob_basket = {kind: 0 for kind in self.player.mob_kinds}
         self.mob_basket = mob_basket
 
@@ -37,6 +37,7 @@ class Branch:
 # TODO: iteration method requires optimization and it cannot work for big mob-shops
 
 def get_forks_consider_new_mob(branch, mob):
+    branch = branch.copy()
     while branch.player.is_mob_available(mob):
         branch.buy(mob)
         yield branch.copy()

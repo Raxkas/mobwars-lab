@@ -51,4 +51,5 @@ class Player:
         self.money -= mob.money_cost
         self.power -= mob.power_cost
         self.mob_stock[mob] -= 1
+        self._mob_stock_sec[mob] -= mob.cooldown
         self.income += mob.income
