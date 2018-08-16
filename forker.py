@@ -34,26 +34,59 @@ class Branch:
         self.mob_basket[mob] += 1
 
 
-# TODO: iteration method requires optimization and it cannot work for big mob-shops
-
-def get_forks_consider_new_mob(branch, mob):
-    branch = branch.copy()
-    while branch.player.is_mob_available(mob):
-        branch.buy(mob)
-        yield branch.copy()
+# TODO: iteration method cannot work for big mob-shops
 
 
-def extend_branches_consider_new_mob(branches, mob):
-    extend_branches = branches.extend
-    for branch in tuple(branches):
-        forks = get_forks_consider_new_mob(branch, mob)
-        extend_branches(forks)
+# TODO: refactoring
 
 
-def compute_available_branches(player):
-    branch = Branch(player)
-    result = [branch]
-    extend_result_consider_new_mob = partial(extend_branches_consider_new_mob, branches=result)
-    for mob in player.mob_kinds:
-        extend_result_consider_new_mob(mob=mob)
-    return result
+@lru_cache(maxsize=None)
+def _get_all_possible_mob_baskets(power, available_mobs):
+    if not available_mobs:
+        return [()]
+    mob, available_mobs = available_mobs[-1], available_mobs[:-1]
+    result = []
+    basket = ()
+    while power >= 0:
+        variants = _get_all_possible_mob_baskets(power, available_mobs)
+        if basket:
+            variants = map(basket.__add__, variants)
+        result.extend(variants)
+        power -= mob.power_cost
+        basket += (mob,)
+    return tuple(result)
+
+
+def __test(func):
+    from time import time as get_current_time
+
+    start_time = get_current_time()
+    result = func(Player.power, Player.mob_kinds)
+    execution_time = get_current_time() - start_time
+
+    cache_info = func.cache_info()
+    func.cache_clear()
+
+    result_length = len(result)
+
+    def sort_basket(basket):
+        return tuple(sorted(basket, key=lambda kind: kind.name))
+
+    result = set(map(sort_basket, result))
+    real_result_length = len(result)
+
+    print("Name:", func.__name__)
+    print("Execution time:", execution_time)
+    print("Cache info:", cache_info)
+    print("Result length:", result_length)
+    if result_length == real_result_length:
+        print("No basket repeating.")
+    else:
+        print("There is basket repeating.", end=' ')
+        print("Real length is", real_result_length, end='.\n')
+
+
+if __name__ == "__main__":
+    __test(_get_all_possible_mob_baskets)
+else:
+    raise ImportError
