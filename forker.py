@@ -3,7 +3,16 @@ from functools import lru_cache, partial
 from mobwars.player import Player
 
 
+# TODO: player can avoid overflowing of the mob-stack by buying during a wave.
 class Branch:
+    """
+    Describes purchases for the wave.
+
+    Consists of a mob-basket and a player's model.
+    The mob-basket displays the number of purchased mobs: {mob_class: purchases_count}.
+    The player's model displays the player's state after buying.
+    """
+
     def __init__(self, player=None):
         if player is None:
             self.player = Player()
@@ -57,3 +66,7 @@ def compute_available_branches(player):
     for mob in player.mob_kinds:
         extend_result_consider_new_mob(mob=mob)
     return result
+
+
+if __name__ == "__main__":
+    help(Branch)
