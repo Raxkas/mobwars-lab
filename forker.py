@@ -1,4 +1,5 @@
-from functools import partial
+from collections import Counter
+from functools import lru_cache, partial
 
 from mobwars.player import Player
 
@@ -19,11 +20,11 @@ class Branch:
             self.player.skip_time_to_wave_end()
         else:
             self.player = player.copy()
-        # TODO: collections.counter or mobwars.mob_counter
         self._new_basket()
 
     def _new_basket(self):
-        self.mob_basket = {kind: 0 for kind in self.player.mob_kinds}
+        # TODO: create mobwars.mob_counter?
+        self.mob_basket = Counter({kind: 0 for kind in self.player.mob_kinds})
         self.income_increase = 0
         self.money_cost = 0
 
@@ -41,6 +42,10 @@ class Branch:
         copy.income_increase = self.income_increase
         return copy
 
+    def merge(self, other):
+        for mob in other.mob_basket.elements():
+            self.buy(mob)
+
     def buy(self, mob):
         self.player.buy(mob)
         self.mob_basket[mob] += 1
@@ -52,55 +57,24 @@ class Branch:
 
 
 # TODO: refactoring
+# TODO: immutable branch?
+
+def _compute_available_branches(player, ignored_kinds_count=0):
+    main_branch = Branch(player)
+    mob_kinds = player.mob_kinds
+    if ignored_kinds_count == len(mob_kinds):
+        yield main_branch
+        return None
+    current_kind_index = ignored_kinds_count
+    current_kind = mob_kinds[current_kind_index]
+    yield from _compute_available_branches(main_branch.player, ignored_kinds_count + 1)
+    while main_branch.player.is_mob_available(current_kind):
+        main_branch.buy(current_kind)
+        branches = tuple(_compute_available_branches(main_branch.player, ignored_kinds_count + 1))
+        for branch in branches:
+            branch.merge(main_branch)
+        yield from branches
 
 
-@lru_cache(maxsize=None)
-def _get_all_possible_mob_baskets(power, available_mobs):
-    if not available_mobs:
-        return [()]
-    mob, available_mobs = available_mobs[-1], available_mobs[:-1]
-    result = []
-    basket = ()
-    while power >= 0:
-        variants = _get_all_possible_mob_baskets(power, available_mobs)
-        if basket:
-            variants = map(basket.__add__, variants)
-        result.extend(variants)
-        power -= mob.power_cost
-        basket += (mob,)
-    return tuple(result)
-
-
-def __test(func):
-    from time import time as get_current_time
-
-    start_time = get_current_time()
-    result = func(Player.power, Player.mob_kinds)
-    execution_time = get_current_time() - start_time
-
-    cache_info = func.cache_info()
-    func.cache_clear()
-
-    result_length = len(result)
-
-    def sort_basket(basket):
-        return tuple(sorted(basket, key=lambda kind: kind.name))
-
-    result = set(map(sort_basket, result))
-    real_result_length = len(result)
-
-    print("Name:", func.__name__)
-    print("Execution time:", execution_time)
-    print("Cache info:", cache_info)
-    print("Result length:", result_length)
-    if result_length == real_result_length:
-        print("No basket repeating.")
-    else:
-        print("There is basket repeating.", end=' ')
-        print("Real length is", real_result_length, end='.\n')
-
-
-if __name__ == "__main__":
-    __test(_get_all_possible_mob_baskets)
-else:
-    raise ImportError
+def compute_available_branches(player):
+    return tuple(_compute_available_branches(player))
