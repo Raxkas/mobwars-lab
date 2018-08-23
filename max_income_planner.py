@@ -1,4 +1,5 @@
-from forker import compute_available_branches, Branch
+from branch import Branch
+from forker import compute_available_branches
 
 
 def choice_best_branch(branches):

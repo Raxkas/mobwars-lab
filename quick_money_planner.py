@@ -1,7 +1,8 @@
 from functools import partial
 import itertools
 
-from forker import compute_available_branches, Branch
+from branch import Branch
+from forker import compute_available_branches
 
 
 # TODO: refactoring
