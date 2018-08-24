@@ -1,19 +1,20 @@
 from branch import Branch
-from forker import compute_available_branches
+from forker import compute_available_baskets
 
 
-def choice_best_branch(branches):
-    return max(branches, key=lambda branch: branch.player.income)
+def choice_best_basket(baskets):
+    return max(baskets, key=lambda basket: basket.income_increase)
 
 
-def compute_next_branch(branch):
-    branches = compute_available_branches(branch.player)
-    return choice_best_branch(branches)
+def compute_best_basket(player):
+    baskets = compute_available_baskets(player)
+    return choice_best_basket(baskets)
 
 
 def get_max_income_tactic():
-    best_branch = Branch()
+    branch = Branch()
     while True:
-        best_branch = compute_next_branch(best_branch)
-        yield best_branch.copy()
-        best_branch.next_wave()
+        best_basket = compute_best_basket(branch.player)
+        branch.buy_basket(best_basket)
+        yield branch.copy()
+        branch.next_wave()

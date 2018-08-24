@@ -2,34 +2,35 @@ from functools import partial
 import itertools
 
 from branch import Branch
-from forker import compute_available_branches
+from forker import compute_available_baskets
 
 
 # TODO: refactoring
 
 
-def watch_future_money(branch, waves_forward):
-    income = branch.income_increase
-    cost = branch.money_cost
+def watch_future_money(mob_basket, waves_forward):
+    income = mob_basket.income_increase
+    cost = mob_basket.money_cost
     return waves_forward*income - cost
 
 
-def choice_best_branch(branches, waves_forward):
+def choice_best_basket(baskets, waves_forward):
     key_func = partial(watch_future_money, waves_forward=waves_forward)
-    return max(branches, key=key_func)
+    return max(baskets, key=key_func)
 
 
-def compute_next_branch(branch, waves_forward):
-    branches = compute_available_branches(branch.player)
-    return choice_best_branch(branches, waves_forward)
+def compute_best_basket(player, waves_forward):
+    baskets = compute_available_baskets(player)
+    return choice_best_basket(baskets, waves_forward)
 
 
 def get_tactic_by_waves_forward(waves_forward):
-    best_branch = Branch()
+    branch = Branch()
     for waves_forward in range(waves_forward, 0, -1):
-        best_branch = compute_next_branch(best_branch, waves_forward)
-        yield best_branch.copy()
-        best_branch.next_wave()
+        best_basket = compute_best_basket(branch.player, waves_forward)
+        branch.buy_basket(best_basket)
+        yield branch.copy()
+        branch.next_wave()
 
 
 # TODO: optimization by binary search?
