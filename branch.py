@@ -1,5 +1,6 @@
 from collections import Counter
 
+from mob_basket import MobBasket
 from mobwars.player import Player
 
 
@@ -23,12 +24,10 @@ class Branch:
 
     def _new_basket(self):
         # TODO: create mobwars.mob_counter?
-        self.mob_basket = Counter({kind: 0 for kind in self.player.mob_kinds})
-        self.income_increase = 0
-        self.money_cost = 0
+        self.mob_basket = MobBasket()
 
     def next_wave(self):
-        self.player.money += int(0.8 * self.income_increase)  # bad simulation of mob-killing money
+        self.player.money += int(0.8 * self.mob_basket.income_increase)  # bad simulation of mob-killing money
         self._new_basket()
         self.player.next_wave()
         self.player.skip_time_to_wave_end()
@@ -37,8 +36,6 @@ class Branch:
     def copy(self):
         copy = self.__class__(self.player)
         copy.mob_basket = self.mob_basket.copy()
-        copy.money_cost = self.money_cost
-        copy.income_increase = self.income_increase
         return copy
 
     def merge(self, other):
@@ -47,6 +44,4 @@ class Branch:
 
     def buy(self, mob):
         self.player.buy(mob)
-        self.mob_basket[mob] += 1
-        self.money_cost += mob.money_cost
-        self.income_increase += mob.income
+        self.mob_basket.buy(mob)
