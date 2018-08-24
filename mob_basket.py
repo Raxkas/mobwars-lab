@@ -1,6 +1,3 @@
-
-
-# TODO: player can avoid overflowing of the mob-stack by buying during a wave.
 # TODO: immutable version?
 class MobBasket:
     """Purchases for the wave. """
@@ -12,6 +9,9 @@ class MobBasket:
         self.income_increase = 0
         self.money_cost = 0
         self.power_cost = 0
+
+    def __iter__(self):
+        return iter(self.mobs)
 
     # TODO: use copy module?
     def copy(self):

@@ -54,3 +54,7 @@ class Player:
         self.mob_stock[mob] -= 1
         self._mob_stock_sec[mob] -= mob.cooldown
         self.income += mob.income
+
+    def buy_basket(self, mob_basket):
+        for mob in mob_basket:
+            self.buy_mob(mob)

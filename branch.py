@@ -45,3 +45,7 @@ class Branch:
     def buy_mob(self, mob):
         self.player.buy_mob(mob)
         self.mob_basket.buy(mob)
+
+    def buy_basket(self, mob_basket):
+        self.mob_basket.merge(mob_basket)
+        self.player.buy_basket(mob_basket)
