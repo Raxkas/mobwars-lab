@@ -4,6 +4,7 @@ from mobwars.mob import mob_kinds
 WAVE_DURATION_SEC = 25
 
 
+# TODO: non-mob_kinds-oriented mob_stock?
 class Player:
     hp = 20
     power = 10
@@ -47,7 +48,7 @@ class Player:
         return enough_money and enough_power and enough_count
 
     # TODO: possibility check?
-    def buy(self, mob):
+    def buy_mob(self, mob):
         self.money -= mob.money_cost
         self.power -= mob.power_cost
         self.mob_stock[mob] -= 1

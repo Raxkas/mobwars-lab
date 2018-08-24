@@ -40,8 +40,8 @@ class Branch:
 
     def merge(self, other):
         for mob in other.mob_basket.elements():
-            self.buy(mob)
+            self.buy_mob(mob)
 
-    def buy(self, mob):
-        self.player.buy(mob)
+    def buy_mob(self, mob):
+        self.player.buy_mob(mob)
         self.mob_basket.buy(mob)
