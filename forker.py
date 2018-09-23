@@ -1,6 +1,6 @@
 from functools import partial
 
-from mobwars.player import Player
+from mobwars.player import Player, WAVE_DURATION_SEC
 
 
 # TODO: player can avoid overflowing of the mob-stack by buying during a wave.
@@ -16,22 +16,27 @@ class Branch:
     def __init__(self, player=None):
         if player is None:
             self.player = Player()
-            self.player.skip_time_to_wave_end()
         else:
             self.player = player.copy()
+        self._consider_mob_increment()
         # TODO: collections.counter or mobwars.mob_counter
         self._new_basket()
+
+    def next_wave(self):
+        self.player.money += int(0.8 * self.income_increase)  # bad simulation of mob-killing money
+        self._new_basket()
+        self.player.do_limit_mob_stock = True
+        self.player.add_time(0.1)  # next_wave
+        self._consider_mob_increment()
+
+    def _consider_mob_increment(self):
+        self.player.do_limit_mob_stock = False
+        self.player.add_time(WAVE_DURATION_SEC - 0.1 - self.player.sec_since_wave_start)
 
     def _new_basket(self):
         self.mob_basket = {kind: 0 for kind in self.player.mob_kinds}
         self.income_increase = 0
         self.money_cost = 0
-
-    def next_wave(self):
-        self.player.money += int(0.8 * self.income_increase)  # bad simulation of mob-killing money
-        self._new_basket()
-        self.player.next_wave()
-        self.player.skip_time_to_wave_end()
 
     # TODO: use copy module?
     def copy(self):
