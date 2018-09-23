@@ -41,7 +41,7 @@ class Branch:
         return deepcopy(self)
 
     def merge(self, other):
-        for mob in other.mob_basket.elements():  # TODO: fix bug and add encapsulation
+        for mob in other.mob_basket:
             self.buy_mob(mob)
 
     def buy_mob(self, mob):
