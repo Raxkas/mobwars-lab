@@ -32,7 +32,7 @@ class Player:
             self._next_wave()
 
     def _add_time(self, time_sec):
-        """Just increment time and update mobs consider that."""
+        """Just increment time and update mobs ignoring stack_size."""
         self.sec_since_wave_start += time_sec
         for kind in mob_kinds:
             self._mob_stock_sec[kind] += time_sec

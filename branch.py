@@ -10,7 +10,7 @@ class Branch:
     Describes purchases for the wave.
 
     Consists of a mob-basket and a player's model.
-    The mob-basket displays the number of purchased mobs: {mob_class: purchases_count}.
+    The mob-basket displays purchases for the wave.
     The player's model displays the player's state after buying.
     """
 
