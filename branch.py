@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from mob_basket import MobBasket
 from mobwars.player import Player, WAVE_DURATION_SEC
 
@@ -35,14 +37,11 @@ class Branch:
         # TODO: create mobwars.mob_counter?
         self.mob_basket = MobBasket()
 
-    # TODO: use copy module?
     def copy(self):
-        copy = self.__class__(self.player)
-        copy.mob_basket = self.mob_basket.copy()
-        return copy
+        return deepcopy(self)
 
     def merge(self, other):
-        for mob in other.mob_basket.elements():
+        for mob in other.mob_basket.elements():  # TODO: fix bug and add encapsulation
             self.buy_mob(mob)
 
     def buy_mob(self, mob):

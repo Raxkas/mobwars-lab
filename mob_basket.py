@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class MobBasket:
     """Purchases for the wave."""
 
@@ -12,14 +15,8 @@ class MobBasket:
     def __iter__(self):
         return iter(self._mobs)
 
-    # TODO: use copy module?
     def copy(self):
-        copy = self.__class__()
-        copy._mobs = self._mobs
-        copy.income_increase = self.income_increase
-        copy.money_cost = self.money_cost
-        copy.power_cost = self.power_cost
-        return copy
+        return deepcopy(self)
 
     def merge(self, other):
         self._mobs += other.mobs
