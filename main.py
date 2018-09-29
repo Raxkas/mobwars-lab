@@ -52,43 +52,47 @@ def test_max_income_planner():
     _test_max_income_planner(waves)
 
 
-def _test_forker(func, _func, player):
+def _test_forker(func, _func, player, options):
     func_name = func.__name__
+    print("Name:", func_name)
 
     start_time = get_current_time()
     result = func(player)
     execution_time = get_current_time() - start_time
+    print("Execution time:", execution_time)
 
     cache_info = _func.cache_info()
+    print("Cache info:", cache_info)
 
-    player.money -= 1
-    player.power -= 1
+    if options["do_second_test"]:
+        player.money -= 1
+        player.power -= 1
 
-    start_time = get_current_time()
-    func(player)
-    execution_time_2 = get_current_time() - start_time
+        start_time = get_current_time()
+        result_2 = func(player)
+        execution_time_2 = get_current_time() - start_time
+        print("Second execution time:", execution_time_2)
 
-    cache_info_2 = _func.cache_info()
+        cache_info_2 = _func.cache_info()
+        print("Second cache info:", cache_info_2)
 
     _func.cache_clear()
 
     result_length = len(result)
-
-    def sort_basket(basket):
-        return tuple(sorted(basket, key=lambda kind: kind.name))
-
-    result = set(map(sort_basket, result))
-    real_result_length = len(result)
-
-    print("Name:", func_name)
-    print("Execution time:", "%s, %s" % (execution_time, execution_time_2))
-    print("Cache info:", "%s, %s" % (cache_info, cache_info_2))
     print("Result length:", result_length)
-    if result_length == real_result_length:
-        print("No basket repeating.")
-    else:
-        print("There is basket repeating.", end=' ')
-        print("Real length is %s." % real_result_length)
+
+    if options["do_result_repeating_test"]:
+        def sort_basket(basket):
+            return tuple(sorted(basket, key=lambda kind: kind.name))
+
+        result = set(map(sort_basket, result))
+        real_result_length = len(result)
+
+        if result_length == real_result_length:
+            print("No basket repeating.")
+        else:
+            print("There is basket repeating. Real length is %s." % real_result_length)
+
     print(TEST_END)
 
 
@@ -98,13 +102,18 @@ def test_forker():
     player.add_time(25*25)
     player.do_limit_mob_stock = False
     player.add_time(25)
-    return _test_forker(compute_available_baskets, NoMoneyAlgorithm._compute_available_baskets.__func__, player)
+    _func = NoMoneyAlgorithm._compute_available_baskets.__func__
+    options = {
+        "do_second_test": 0,
+        "do_result_repeating_test": 0
+    }
+    return _test_forker(compute_available_baskets, _func, player, options)
 
 
 tests = {
     test_quick_money_planner: 0,
-    test_max_income_planner: 1,
-    test_forker: 0
+    test_max_income_planner: 0,
+    test_forker: 1
 }
 
 
