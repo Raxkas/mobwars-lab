@@ -4,8 +4,7 @@ from functools import lru_cache
 from mob_basket import ImmutableMobBasket
 
 
-def _generator_with_cache(func):
-    @lru_cache(maxsize=None)
+def _returned_value_to_tuple(func):
     def new_func(*args, **kwargs):
         return tuple(func(*args, **kwargs))
     return new_func
@@ -68,7 +67,8 @@ class BaseAlgorithm:
         return filter(condition, unfiltered)
 
     @classmethod
-    @_generator_with_cache
+    @lru_cache(maxsize=None)
+    @_returned_value_to_tuple
     def _compute_available_baskets(cls, player_data):
         if not player_data.available_mobs:
             yield ImmutableMobBasket.default_instance
