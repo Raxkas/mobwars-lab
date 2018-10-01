@@ -58,7 +58,7 @@ class Player:
         """Make a copy of the player."""
         return deepcopy(self)
 
-    def is_mob_available(self, mob):
+    def is_mob_available(self, mob):  # TODO: rename
         """Check the possibility of mob buying."""
         enough_money = mob.money_cost <= self.money
         enough_power = mob.power_cost <= self.power
@@ -67,12 +67,13 @@ class Player:
 
     # TODO: possibility check?
     def buy_mob(self, mob):
-        """Buy mob."""
+        """Buy a mob."""
         self.money -= mob.money_cost
         self.power -= mob.power_cost
         self.mob_stock[mob] -= 1
         self.income += mob.income
 
     def buy_basket(self, mob_basket):
+        """Buy a basket of mobs."""
         for mob in mob_basket:
             self.buy_mob(mob)
