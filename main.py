@@ -39,11 +39,11 @@ def test_quick_money_planner():
 def _test_max_income_planner(wave_count):
     start_time = get_current_time()
     tactic_generator = get_max_income_tactic()
-    tactic = [next(tactic_generator) for _ in range(wave_count)]
+    print("Result:")
+    tactic = (next(tactic_generator) for _ in range(wave_count))
+    print_tactic(tactic)
     execution_time = get_current_time() - start_time
     print("Execution time:", execution_time)
-    print("Result:")
-    print_tactic(tactic)
     print(TEST_END)
 
 
@@ -112,8 +112,8 @@ def test_forker():
 
 tests = {
     test_quick_money_planner: 0,
-    test_max_income_planner: 0,
-    test_forker: 1
+    test_max_income_planner: 1,
+    test_forker: 0
 }
 
 
