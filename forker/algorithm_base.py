@@ -67,7 +67,7 @@ class BaseAlgorithm:
         return filter(condition, unfiltered)
 
     @classmethod
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=256)
     @_returned_value_to_tuple
     def _compute_available_baskets(cls, player_data):
         if not player_data.available_mobs:
