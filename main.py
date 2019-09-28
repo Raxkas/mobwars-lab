@@ -3,7 +3,8 @@ from time import time as get_current_time
 
 from mobwars.player import Player
 
-from forker import compute_available_baskets, NoMoneyAlgorithm
+from forker import compute_available_baskets,\
+    _compute_available_baskets_ignoring_money
 from max_income_planner import get_max_income_tactic
 from quick_money_planner import get_tactic_by_necessary_money
 
@@ -102,12 +103,16 @@ def test_forker():
     player.add_time(25*25)
     player.do_limit_mob_stock = False
     player.add_time(25)
-    _func = NoMoneyAlgorithm._compute_available_baskets.__func__
     options = {
         "do_second_test": 0,
         "do_result_repeating_test": 0
     }
-    return _test_forker(compute_available_baskets, _func, player, options)
+    return _test_forker(
+        compute_available_baskets,
+        _compute_available_baskets_ignoring_money,
+        player,
+        options
+    )
 
 
 tests = {
